@@ -120,9 +120,13 @@ Key decisions:
 # tui.json
 {
   "$schema": "https://opencode.ai/tui.json",
-  "plugin": ["opencode-fastloop/tui"]
+  "plugin": ["opencode-fastloop"]
 }
 ```
+
+Note: in `tui.json` use the bare package name. The TUI loader resolves the
+`./tui` subpath export itself and does not support `pkg/subpath` npm specs
+(it silently skips them).
 
 Restart OpenCode (config is not hot-reloaded).
 

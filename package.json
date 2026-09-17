@@ -1,13 +1,17 @@
 {
   "name": "opencode-fastloop",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OpenCode plugin: instant typecheck feedback, a verify gate, and a nested-git guard for multi-repo workspaces. Includes a live TUI status chip.",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "exports": {
-    "./server": "./dist/index.js",
-    "./tui": "./dist/tui.js"
+    "./server": {
+      "import": "./dist/index.js"
+    },
+    "./tui": {
+      "import": "./dist/tui.js"
+    }
   },
   "files": [
     "dist",
@@ -29,7 +33,9 @@
     "runtime": "bun"
   },
   "peerDependencies": {
-    "@opencode-ai/plugin": "*"
+    "@opencode-ai/plugin": "*",
+    "@opentui/solid": "*",
+    "solid-js": "*"
   },
   "devDependencies": {
     "@opencode-ai/plugin": "*",
