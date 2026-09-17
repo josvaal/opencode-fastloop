@@ -26,7 +26,7 @@ Designed for **multi-repo workspaces**: e.g. a parent folder (not a git repo its
 - [Multi-workspace isolation](#multi-workspace-isolation)
 - [Requirements](#requirements)
 - [Troubleshooting](#troubleshooting)
-- [Publishing to npm](#publishing-to-npm)
+- [Development](#development)
 - [License](#license)
 
 ---
@@ -249,40 +249,14 @@ State lives in `~/.cache/opencode/fastloop/state-<sha256-12 of root>.json`:
 
 Debug logging from the server plugin side can be inspected in the OpenCode log (`~/.local/share/opencode/log/opencode.log`).
 
-## Publishing to npm
-
-One-time setup:
+## Development
 
 ```bash
-# 1. Authenticate npm (account required at npmjs.com)
-npm login
-
-# 2. Verify the package builds and its "files" are complete
+npm install
 npm run build
-npm pack --dry-run    # inspect: dist/, README.md, LICENSE
-
-# 3. Validate the exports map resolves
-node -e "console.log(require('./package.json').exports)"
 ```
 
-Release flow:
-
-```bash
-# 4. Bump the version (choose patch/minor/major)
-npm version patch    # e.g. 0.1.0 -> 0.1.1
-
-# 5. Publish (prepublishOnly runs the build automatically)
-npm publish --access public
-
-# 6. Tag and push the release commit
-git push --follow-tags
-```
-
-After publishing:
-
-- Consumers install via the npm entries shown in [Installation](#installation).
-- Update the npm plugin options in `opencode.json` (the local symlink and `src/tui.tsx` entry can then be removed).
-- A `prepublishOnly` guard guarantees `dist/` is rebuilt from current sources on every publish.
+Maintainers: see [CONTRIBUTING.md](./CONTRIBUTING.md) for the release and publishing workflow.
 
 ## License
 
