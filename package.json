@@ -1,6 +1,6 @@
 {
   "name": "opencode-fastloop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenCode plugin: instant typecheck feedback, a verify gate, and a nested-git guard for multi-repo workspaces. Includes a live TUI status chip.",
   "license": "MIT",
   "type": "module",
