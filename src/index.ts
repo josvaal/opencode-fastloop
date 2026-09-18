@@ -308,8 +308,18 @@ export const FastloopPlugin: Plugin = async (input, options) => {
     const keep = (l: string) => !ignoreRes.some((re) => re.test(l))
     const realLines = allLines.filter(keep)
     const ignored = allLines.length - realLines.length
+    // Compiler diagnostics (`error TS\d+`) always count, regardless of exit
+    // code. Otherwise the exit code wins: build tools like `ng build` may emit
+    // WARNING lines whose text or code frame mentions identifiers like
+    // `error()` or `form.errors` — those are not type errors, and a successful
+    // (exit 0) run must not be failed over them. On failure without any
+    // parseable diagnostic, fall back to counting matched lines.
     const tsMatches = realLines.join("\n").match(/error TS\d+/g)
-    const errors = realLines.length === 0 ? 0 : tsMatches ? tsMatches.length : realLines.length
+    const errors = tsMatches
+      ? tsMatches.length
+      : commandOk
+        ? 0
+        : realLines.length || 1
     const status: RepoStatus = errors > 0 ? "error" : "ok"
     return {
       status,
